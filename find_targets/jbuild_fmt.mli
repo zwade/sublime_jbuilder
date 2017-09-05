@@ -4,5 +4,5 @@ module Target : sig
   type t
 end
 
-type t
+type t = Target.t list
 [@@deriving sexp]  

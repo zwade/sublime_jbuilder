@@ -34,8 +34,9 @@ let targets_by_path jbuild_roots =
         let%map targets = Reader.load_sexps (root_path ^/ "jbuild") ([%of_sexp: Jbuild_fmt.t]) in
         match targets with
         | Error e -> raise_s [%sexp "Error reading jbuild file: ", (e : Error.t)]
-        | Ok x    -> 
-          Hashtbl.set target_map ~key:root_path ~data:x) 
+        | Ok x    ->
+          let data = List.concat x in 
+          Hashtbl.set target_map ~key:root_path ~data) 
       
   in
   let%map () = results in
@@ -45,7 +46,7 @@ let run root () =
   let%bind jbuilds = find_all_jbuild ~root in
   let%map targets = targets_by_path jbuilds in
   Hashtbl.iteri targets ~f:(fun ~key ~data ->
-      printf !"%{sexp:string * Jbuild_fmt.t list}\n" (key, data))
+      printf !"%{sexp:string * Jbuild_fmt.t}\n" (key, data))
     
 
 let command_find = Command.async' ~summary:"Find all jbuild files under root" 
