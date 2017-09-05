@@ -31,12 +31,21 @@ class Find_targets_builder(threading.Thread):
 			print("jbuilder succeeded")
 		Find_targets_builder.build_lock.release()
 
+class Find_targets:
+	def list(self, path="."):
+		proc = subprocess.Popen([find_targets_exe, "list", path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+		proc.wait()
+		print(proc.stdout.read())
+
 def reload_if_needed(force=False):
 	target = Find_targets()
 	if target.needs_reload(force):
 		target.start()
 
 reload_if_needed(force=True)
+
+targets = Find_targets()
+targets.list("..")
 
 class JbuilderCmd(sublime_plugin.WindowCommand):
 	def run(self):
