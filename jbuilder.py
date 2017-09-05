@@ -6,7 +6,7 @@ import threading
 base_directory = os.path.dirname(os.path.realpath(__file__))
 find_targets_exe = os.path.join(base_directory, "_build", "default", "find_targets", "find_targets.exe")
 
-class find_targets(threading.thread):
+class find_targets(threading.Thread):
 	def needs_reload(self, force=False):
 		return (force 
 			or not os.path.isfile(find_targets_exe)
