@@ -6,6 +6,15 @@ from string import whitespace
 
 atom_end = set('()"\'') | set(whitespace)
 
+def clean(parsed_sexp):
+    if type(parsed_sexp) == "tuple" or type(parsed_sexp) == "list":
+        result = [clean(s) for s in parsed_sexp]
+        if len(result) == 1:
+            return result[0]
+        else:
+            return result
+
+
 def parse_sexp(sexp):
     stack, i, length = [[]], 0, len(sexp)
     while i < length:
@@ -38,4 +47,4 @@ def parse_sexp(sexp):
                 continue
             else: stack[-1] = ((stack[-1][0] + c),)
         i += 1
-    return stack.pop()
+    return clean(stack.pop())
