@@ -36,7 +36,7 @@ class Find_targets:
 		proc = subprocess.Popen([find_targets_exe, "list", "-root", base_directory], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 		proc.wait()
 		result = proc.stdout.read().decode("utf-8")
-		print(sexp.parse(result))
+		print(parse_sexp(result))
 
 
 def reload_if_needed(force=False):
