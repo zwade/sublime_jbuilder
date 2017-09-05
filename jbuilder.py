@@ -2,6 +2,7 @@ import os
 import subprocess
 import sublime, sublime_plugin
 import threading
+import sexp
 
 base_directory = os.path.dirname(os.path.realpath(__file__))
 find_targets_exe = os.path.join(base_directory, "_build", "default", "find_targets", "find_targets.exe")
@@ -34,7 +35,9 @@ class Find_targets:
 	def list(self, path="."):
 		proc = subprocess.Popen([find_targets_exe, "list", "-root", base_directory], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 		proc.wait()
-		print(proc.stdout.read().decode("utf-8"))
+		result = proc.stdout.read().decode("utf-8")
+		print(sexp.parse(result))
+
 
 def reload_if_needed(force=False):
 	target_builder = Find_targets_builder()
