@@ -2,7 +2,7 @@ import os
 import subprocess
 import sublime, sublime_plugin
 import threading
-import sexp
+import .sexp
 
 base_directory = os.path.dirname(os.path.realpath(__file__))
 find_targets_exe = os.path.join(base_directory, "_build", "default", "find_targets", "find_targets.exe")
