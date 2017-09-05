@@ -15,6 +15,7 @@ def clean(parsed_sexp):
         else:
             return result
     else:
+        print(type(parsed_sexp))
         return parsed_sexp
 
 
