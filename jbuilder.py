@@ -2,8 +2,6 @@ import os
 import subprocess
 import sublime, sublime_plugin
 
-print("boogaloo")
-
 base_directory = os.path.dirname(os.path.realpath(__file__))
 find_targets_exe = os.path.join(base_directory, "_build", "default", "find_targets", "find_targets.exe")
 
@@ -19,7 +17,6 @@ def reload_if_needed():
 			print(proc.stderr.read().decode("utf-8"))
 		else:
 			print("jbuilder succeeded")
-			print(proc.stdout.read())
 
 
 class JbuilderCmd(sublime_plugin.WindowCommand):
