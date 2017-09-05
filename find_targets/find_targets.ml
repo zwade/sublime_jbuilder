@@ -44,8 +44,8 @@ let targets_by_path jbuild_roots =
 let run root () =
   let%bind jbuilds = find_all_jbuild ~root in
   let%map targets = targets_by_path jbuilds in
-  printf !"Found: %{sexp:Path.t list}\n" jbuilds;
-  printf !"Found targets: %{sexp:Jbuild_fmt.t list Path.Table.t}" targets
+  Hashtbl.iteri targets ~f:(fun ~key ~data ->
+      printf !"%{sexp:string * Jbuild_fmt.t list}\n" (key, data))
     
 
 let command_find = Command.async' ~summary:"Find all jbuild files under root" 
