@@ -17,6 +17,7 @@ def reload_if_needed():
 			print(proc.stderr.read().decode("utf-8"))
 		else:
 			print("jbuilder succeeded")
+			print(proc.stdout.read())
 
 
 class JbuilderCmd(sublime_plugin.WindowCommand):
