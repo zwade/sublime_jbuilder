@@ -1,8 +1,6 @@
 open Core
 open Async
     
-module J = Jbuild_fmt
-  
 let find_all_jbuild ~root =
   let%bind is_root_a_directory = Sys.is_directory root in
   begin
@@ -58,7 +56,7 @@ let command_find = Command.async' ~summary:"Find all jbuild files under root"
     end
     
 let command = Command.group ~summary:"Operations for dealing with jbuild files"
-    [ "find", command_find
+    [ "list", command_find
     ]
     
 let () = Command.run command
