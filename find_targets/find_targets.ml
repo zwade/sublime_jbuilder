@@ -57,16 +57,8 @@ let command_find = Command.async' ~summary:"Find all jbuild files under root"
       run root
     end
     
-let command_version = Command.basic' ~summary:"Print version"
-    begin
-      let open Command.Let_syntax in
-      let%map_open _ = return () in
-      fun () -> printf "Version: 0.1.0"
-    end
-    
 let command = Command.group ~summary:"Operations for dealing with jbuild files"
     [ "find", command_find
-    ; "version", command_version
     ]
     
 let () = Command.run command
