@@ -5,7 +5,6 @@ import sublime, sublime_plugin
 base_directory = os.path.dirname(os.path.realpath(__file__))
 find_targets_exe = os.path.join(base_directory, "_build", "default", "find_targets", "find_targets.exe")
 
-# for change 11
 def reload_if_needed():
 	if not os.path.isfile(find_targets_exe) or ("BUILD_ON_RELOAD" in os.environ and os.environ["BUILD_ON_RELOAD"]):
 		os.chdir(base_directory)
@@ -18,6 +17,8 @@ def reload_if_needed():
 		else:
 			print("jbuilder succeeded")
 
+
+reload_if_needed()
 
 class JbuilderCmd(sublime_plugin.WindowCommand):
 	def run(self, cmd):
