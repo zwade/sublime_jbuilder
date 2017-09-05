@@ -48,7 +48,7 @@ class Find_targets_builder(threading.Thread):
 		Find_targets_builder.build_lock.release()
 
 class Find_targets:
-	def __init__(self, path=base_directory):
+	def __init__(self, path=os.path.join(base_directory,".."):
 		 self.path=os.path.abspath(path)
 
 	def relativize(self, new_path):
