@@ -12,7 +12,7 @@ def reload_if_needed(force=False):
 			or ("BUILD_ON_RELOAD" in os.environ and os.environ["BUILD_ON_RELOAD"])):
 		os.chdir(base_directory)
 		print("Rebuilding find_targets in directory {}".format(base_directory))
-		proc = subprocess.Popen (["jbuilder", "build", "find_targets/find_targets.exe"], 
+		proc = subprocess.Popen (["jbuilder", "build", "find_targets/find_targets.exe", "--verbose"], 
 			stdout=subprocess.PIPE, 
 			stderr=subprocess.PIPE, 
 			cwd=base_directory, 
