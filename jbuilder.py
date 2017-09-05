@@ -48,7 +48,7 @@ class Find_targets_builder(threading.Thread):
 		Find_targets_builder.build_lock.release()
 
 class Find_targets:
-	def __init__(self, path=os.path.join(base_directory,"..")):
+	def __init__(self, path=os.path.join(base_directory,".")):
 		self.path=os.path.abspath(path)
 		print(self.path)
 
@@ -59,7 +59,6 @@ class Find_targets:
 		to_traverse = range(min(len(my_path), len(new_path)))
 		for i in to_traverse:
 			if my_path[0] == new_path[0]:
-				print(my_path[0])
 				my_path  = my_path[1:]
 				new_path = new_path[1:]
 			else:
