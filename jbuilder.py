@@ -24,7 +24,7 @@ def reload_if_needed(force=False):
 			print("jbuilder succeeded")
 
 
-reload_if_needed()
+reload_if_needed(force=True)
 
 class JbuilderCmd(sublime_plugin.WindowCommand):
 	def run(self, cmd):
