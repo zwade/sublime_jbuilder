@@ -44,10 +44,7 @@ def reload_if_needed(force=False):
 
 reload_if_needed(force=True)
 
-targets = Find_targets()
-targets.list("..")
-
 class JbuilderCmd(sublime_plugin.WindowCommand):
 	def run(self):
-		reload_if_needed(force=True)
-		pass
+		targets = Find_targets()
+		targets.list("..")
