@@ -50,7 +50,7 @@ let run root () =
   printf !"Found targets: %{sexp:Jbuild_fmt.t list Path.Table.t}" targets
     
 
-let command_find = Command.async' ~summary:"Find all jbuild files" 
+let command_find = Command.async' ~summary:"Find all jbuild files under root" 
     begin
       let open Command.Let_syntax in
       let%map_open root = flag "-root" (required file) ~doc:"directory The directory to search for jbuilds in" in
