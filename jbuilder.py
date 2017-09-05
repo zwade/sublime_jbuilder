@@ -48,11 +48,31 @@ class Find_targets_builder(threading.Thread):
 		Find_targets_builder.build_lock.release()
 
 class Find_targets:
-	def list(self, path="."):
-		proc = subprocess.Popen([find_targets_exe, "list", "-root", base_directory], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+	def __init__(self, path=base_directory):
+		 self.path=os.path.abspath(path)
+
+	def relativize(self, new_path):
+		my_path  = self.path.split("/")
+		new_path = new_path.split("/")
+
+		for i in range(min(len(my_path), len(new_path))):
+			if my_path[i] == new_path[i]:
+				continue
+			result = [".." for _i in my_path[i:]] + new_path[i:]
+		return []
+
+
+	def list(self):
+		proc = subprocess.Popen([find_targets_exe, "list", "-root", self.path], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 		proc.wait()
 		result = proc.stdout.read().decode("utf-8")
-		print(parse_sexp(result))
+		mapping = parse_sexp(result)
+		targets = []
+		for (path, target_names) in mapping:
+			relative_path = self.relativize(path)
+			for target_name in target_names:
+				targets.push(os.path.join(relative_path+[target_name]))
+		print(targets)
 
 
 def reload_if_needed(force=False):
