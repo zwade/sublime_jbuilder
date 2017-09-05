@@ -36,6 +36,6 @@ def parse_sexp(sexp):
                 else: stack[-1].append(atom)
                 if stack[-1][0] == ('quote',): stack[-2].append(stack.pop())
                 continue
-            else: stack[-1] = (stack[-1][0] + c)
+            else: stack[-1] = ((stack[-1][0] + c),)
         i += 1
     return stack.pop()
