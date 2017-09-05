@@ -12,7 +12,7 @@ class Find_targets(threading.Thread):
 			or not os.path.isfile(find_targets_exe)
 			or ("BUILD_ON_RELOAD" in os.environ and os.environ["BUILD_ON_RELOAD"]))
 
-	def run():
+	def run(self):
 		os.chdir(base_directory)
 		print("Rebuilding find_targets in directory {}".format(base_directory))
 		proc = subprocess.Popen (["jbuilder", "build", "find_targets/find_targets.exe"], 
