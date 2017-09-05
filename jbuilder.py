@@ -28,6 +28,6 @@ def reload_if_needed(force=False):
 reload_if_needed(force=True)
 
 class JbuilderCmd(sublime_plugin.WindowCommand):
-	def run(self, cmd):
+	def run(self):
 		reload_if_needed(force=True)
 		pass
