@@ -7,6 +7,7 @@ from string import whitespace
 atom_end = set('()"\'') | set(whitespace)
 
 def clean(parsed_sexp):
+    print("Cleaning!")
     if type(parsed_sexp) == "tuple" or type(parsed_sexp) == "list":
         result = [clean(s) for s in parsed_sexp]
         if type(parsed_sexp) == "tuple" and len(result) == 1:
