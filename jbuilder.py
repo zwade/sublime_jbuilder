@@ -2,10 +2,25 @@ import os
 import subprocess
 import sublime, sublime_plugin
 import threading
-from .sexp import parse_sexp
 
 base_directory = os.path.dirname(os.path.realpath(__file__))
 find_targets_exe = os.path.join(base_directory, "_build", "default", "find_targets", "find_targets.exe")
+
+# Weird hacks to avoid sublime caching an old version
+if sys.version_info.minor < 3:
+	from sexp import parse_sexp
+else:
+	if sys.version_info.minor < 4:
+	    from imp import reload
+	else:
+	    from importlib import reload
+	if base_directory not in sys.path:
+	    sys.path.append(base_directory)
+
+	import sexp
+	reload(sexp)
+
+	from sexp import parse_sexp
 
 class Find_targets_builder(threading.Thread):
 	build_lock = threading.Lock()
