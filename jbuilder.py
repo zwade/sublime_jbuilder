@@ -33,7 +33,7 @@ class Find_targets_builder(threading.Thread):
 
 class Find_targets:
 	def list(self, path="."):
-		proc = subprocess.Popen([find_targets_exe, "list", base_directory], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+		proc = subprocess.Popen([find_targets_exe, "list", "-root", base_directory], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 		proc.wait()
 		print(proc.stdout.read())
 
