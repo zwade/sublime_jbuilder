@@ -58,9 +58,10 @@ class Find_targets:
 
 		for i in range(min(len(my_path), len(new_path))):
 			if my_path[i] == new_path[i]:
-				continue
-			result = [".." for _i in my_path[i:]] + new_path[i:]
-		return []
+				my_path = my_path[1:]
+				new_path = my_path[1:]
+
+		return [".." for _i in my_path] + new_path
 
 
 	def list(self):
