@@ -18,6 +18,8 @@ def reload_if_needed(force=False):
 			print(proc.stderr.read().decode("utf-8"))
 		else:
 			print("jbuilder succeeded")
+			print(proc.stdout.read())
+			print(proc.stderr.read())
 
 
 reload_if_needed()
