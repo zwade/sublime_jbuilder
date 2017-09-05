@@ -38,9 +38,9 @@ class Find_targets:
 		print(proc.stdout.read())
 
 def reload_if_needed(force=False):
-	target = Find_targets()
-	if target.needs_reload(force):
-		target.start()
+	target_builder = Find_targets_builder()
+	if target_builder.needs_reload(force):
+		target_builder.start()
 
 reload_if_needed(force=True)
 
