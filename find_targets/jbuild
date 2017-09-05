@@ -1,0 +1,10 @@
+(jbuild_version 1)
+
+(executable
+  ((name find_targets)
+   (libraries
+     (core 
+      async
+      parsexp))
+   (preprocess 
+     (pps (ppx_jane)))))

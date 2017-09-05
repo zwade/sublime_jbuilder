@@ -1,0 +1,6 @@
+[
+	{
+		"caption": "Build target using JBuilder",
+		"command": "jbuilder_cmd"
+	}
+]
