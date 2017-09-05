@@ -85,4 +85,4 @@ reload_if_needed(force=True)
 class JbuilderCmd(sublime_plugin.WindowCommand):
 	def run(self):
 		targets = Find_targets()
-		targets.list("..")
+		targets.list()
