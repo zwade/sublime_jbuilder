@@ -7,7 +7,6 @@ from .sexp import parse_sexp
 base_directory = os.path.dirname(os.path.realpath(__file__))
 find_targets_exe = os.path.join(base_directory, "_build", "default", "find_targets", "find_targets.exe")
 
-
 class Find_targets_builder(threading.Thread):
 	build_lock = threading.Lock()
 	def needs_reload(self, force=False):
