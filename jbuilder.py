@@ -59,8 +59,8 @@ class Find_targets:
 		to_traverse = range(min(len(my_path), len(new_path)))
 		for i in to_traverse:
 			if my_path[0] == new_path[0]:
-				my_path = my_path[1:]
-				new_path = my_path[1:]
+				my_path  = my_path[1:]
+				new_path = new_path[1:]
 			else:
 				print("{} not equal to {}".format(my_path[0], new_path[0]))
 				break
