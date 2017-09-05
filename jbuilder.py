@@ -55,14 +55,14 @@ class Find_targets:
 	def relativize(self, new_path):
 		my_path  = self.path.split("/")
 		new_path = new_path.split("/")
-		print (my_path, new_path)
-		
+
 		to_traverse = range(min(len(my_path), len(new_path)))
 		for i in to_traverse:
 			if my_path[0] == new_path[0]:
 				my_path = my_path[1:]
 				new_path = my_path[1:]
 			else:
+				print("{} not equal to {}".format(my_path[0], new_path[0]))
 				break
 
 		return [".." for _i in my_path] + new_path
