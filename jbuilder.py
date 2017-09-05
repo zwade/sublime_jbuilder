@@ -35,7 +35,7 @@ class Find_targets:
 	def list(self, path="."):
 		proc = subprocess.Popen([find_targets_exe, "list", "-root", base_directory], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 		proc.wait()
-		print(proc.stdout.read())
+		print(proc.stdout.read().decode("utf-8"))
 
 def reload_if_needed(force=False):
 	target_builder = Find_targets_builder()
