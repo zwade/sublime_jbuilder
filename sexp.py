@@ -14,7 +14,7 @@ def clean(parsed_sexp):
         else:
             return result
     else:
-        return result 
+        return parsed_sexp
 
 
 def parse_sexp(sexp):
