@@ -49,8 +49,8 @@ class Find_targets_builder(threading.Thread):
 
 class Find_targets:
 	def __init__(self, path=os.path.join(base_directory,"..")):
-		 self.path=os.path.abspath(path)
-		 print(self.path)
+		self.path=os.path.abspath(path)
+		print(self.path)
 
 	def relativize(self, new_path):
 		my_path  = self.path.split("/")
@@ -71,6 +71,7 @@ class Find_targets:
 		targets = []
 		for (path, target_names) in mapping:
 			relative_path = self.relativize(path)
+			print("Path: {}, Rel path: {}".format(path, relative_path))
 			for target_name in target_names:
 				targets.append(os.path.join(*(relative_path+[target_name])))
 		print(targets)
