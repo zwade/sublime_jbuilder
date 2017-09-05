@@ -6,7 +6,7 @@ from string import whitespace
 
 atom_end = set('()"\'') | set(whitespace)
 
-def parse(sexp):
+def parse_sexp(sexp):
     stack, i, length = [[]], 0, len(sexp)
     while i < length:
         c = sexp[i]
