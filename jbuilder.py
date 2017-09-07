@@ -163,7 +163,7 @@ class JbuilderCmd(sublime_plugin.WindowCommand):
 			if (idx < 0):
 				return
 			open(targets_file, "a+").write(targets[idx]+"\n")
-			window.open_file(targets_file)
+			self.window.open_file(targets_file)
 			builder = SingleBuilder(working_directory, [targets[idx]], 3)
 
 		folder = self.window.folders()[0] if len(self.window.folders()) > 0 else "."
