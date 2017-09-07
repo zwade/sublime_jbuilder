@@ -169,16 +169,16 @@ class SingleBuilder(threading.Thread):
 
 class JbuilderShowCompilationErrors(sublime_plugin.TextCommand):
     def run(self, edit, args):
-    	print("opening")
-    	sig_text = args["text"]
-        window = self.view.window()
+		print("opening")
+		sig_text = args["text"]
+		window = self.view.window()
 
-        output = window.create_output_panel("jbuilder-errors")
-        full_region = sublime.Region(0, output.size())
-        output.replace(edit, full_region, sig_text)
+		output = window.create_output_panel("jbuilder-errors")
+		full_region = sublime.Region(0, output.size())
+		output.replace(edit, full_region, sig_text)
 
-        output.sel().clear()
-        window.run_command("show_panel", {"panel": "output.jbuilder-errors"})
+		output.sel().clear()
+		window.run_command("show_panel", {"panel": "output.jbuilder-errors"})
 
 
 class JbuilderCmd(sublime_plugin.WindowCommand):
