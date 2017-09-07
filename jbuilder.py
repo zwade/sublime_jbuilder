@@ -120,6 +120,7 @@ class SingleBuilder:
 
 	def run_in_background(self):
 		status = JbuilderStatus()
+		print("hi")
 		result = self.start()
 		status.stop()
 		print(result)
