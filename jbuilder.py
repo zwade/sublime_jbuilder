@@ -129,12 +129,12 @@ class SingleBuilder(threading.Thread):
 		os.chdir(self.working_directory)
 		procs = []
 		for target in self.targets:
+			if not target:
+				continue
 			proc = subprocess.Popen (["jbuilder", "build", target], 
 				stdout=subprocess.PIPE, 
 				stderr=subprocess.PIPE, 
 				cwd=self.working_directory)
-			procs.append((target, proc))
-		for (target, proc) in procs:
 			return_code = proc.wait()
 			if return_code != 0:
 				print("jbuilder failed with:")
