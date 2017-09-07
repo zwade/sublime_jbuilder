@@ -100,17 +100,16 @@ reload_if_needed(force=True)
 
 class JbuilderStatus:
 	def __init__(self):
-		self.terminator = {end : False}
+		self.terminator = {"end" : False}
 
 	def run(self):
 		while True:
-			if self.terminator.end:
+			if self.terminator["end"]:
 				return
-			print("hi")
 			time.sleep(2)
 
 	def stop(self):
-		self.terminator.end = True
+		self.terminator["end"] = True
 
 class SingleBuilder:
 	def __init__(self, working_directory, targets, on_done):
@@ -120,7 +119,6 @@ class SingleBuilder:
 
 	def run_in_background(self):
 		status = JbuilderStatus()
-		print("hi")
 		result = self.start()
 		status.stop()
 		print(result)
@@ -155,7 +153,7 @@ class JbuilderCmd(sublime_plugin.WindowCommand):
 		else:
 			if path[-1] == "/":
 				path = path[:-1]
-			base_dir = find_dot_sublime_targets (path)
+			base_dir = find_dot_sublime_targets(path)
 			if base_dir == None:
 				base_dir = path
 			working_directory = base_dir
@@ -173,7 +171,7 @@ class JbuilderCmd(sublime_plugin.WindowCommand):
 		find_targets = Find_targets(path=folder)
 		targets = [y for (x,y) in find_targets.list()]
 
-		contents = open(targets_file, "w+").read()
+		contents = open(targets_file, "r+").read()
 		if not contents:
 			self.window.show_quick_panel(targets, on_done)
 		else:
