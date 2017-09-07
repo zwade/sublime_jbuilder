@@ -102,15 +102,16 @@ class JbuilderStatus(threading.Thread):
 	def __init__(self, window):
 		threading.Thread.__init__(self, name="JBuilder Status")
 		self.terminator = {"end" : False}
-		self.window = window
+		self.view = window.active_view()
 
 	def run(self):
 		while True:
 			if self.terminator["end"]:
-				self.window.erase_status("JBuilder")
+				self.view.erase_status("JBuilder")
 				return
 
-			self.window.set_status("JBuilder", "Woot")
+			print("Setting status")
+			self.view.set_status("JBuilder", "Woot")
 			time.sleep(0.5)
 
 	def stop(self):
