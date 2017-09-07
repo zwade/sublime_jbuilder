@@ -100,6 +100,7 @@ reload_if_needed(force=True)
 
 class JbuilderStatus(threading.Thread):
 	def __init__(self):
+		threading.Thread.__init__(self, name="JBuilder Status")
 		self.terminator = {"end" : False}
 
 	def run(self):
@@ -113,6 +114,7 @@ class JbuilderStatus(threading.Thread):
 
 class SingleBuilder(threading.Thread):
 	def __init__(self, working_directory, targets, on_done):
+		threading.Thread.__init__(self, name=("JBuilder targets {}".format(targets)))
 		self.working_directory = working_directory
 		self.target = targets
 		self.on_done = on_done
