@@ -133,7 +133,7 @@ class SingleBuilder:
 				stderr=subprocess.PIPE, 
 				cwd=base_directory)
 			procs.append((target, proc))
-		for proc in procs
+		for proc in procs:
 			return_code = proc.wait()
 			if return_code != 0:
 				print("jbuilder failed with:")
