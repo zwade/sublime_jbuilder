@@ -132,7 +132,7 @@ class SingleBuilder(threading.Thread):
 			proc = subprocess.Popen (["jbuilder", "build", target], 
 				stdout=subprocess.PIPE, 
 				stderr=subprocess.PIPE, 
-				cwd=base_directory)
+				cwd=self.working_directory)
 			procs.append((target, proc))
 		for (target, proc) in procs:
 			return_code = proc.wait()
