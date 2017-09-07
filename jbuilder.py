@@ -98,7 +98,7 @@ def find_dot_sublime_targets (path):
 
 reload_if_needed(force=True)
 
-class JbuilderStatus:
+class JbuilderStatus(threading.thread):
 	def __init__(self):
 		self.terminator = {"end" : False}
 
@@ -111,7 +111,7 @@ class JbuilderStatus:
 	def stop(self):
 		self.terminator["end"] = True
 
-class SingleBuilder:
+class SingleBuilder(threading.thread):
 	def __init__(self, working_directory, targets, on_done):
 		self.working_directory = working_directory
 		self.target = targets
@@ -172,6 +172,7 @@ class JbuilderCmd(sublime_plugin.WindowCommand):
 		targets = [y for (x,y) in find_targets.list()]
 
 		contents = open(targets_file, "r+").read()
+		print(contents)
 		if not contents:
 			self.window.show_quick_panel(targets, on_done)
 		else:
