@@ -107,7 +107,7 @@ class JbuilderStatus(threading.Thread):
 		while True:
 			if self.terminator["end"]:
 				return
-			time.sleep(2)
+			time.sleep(0.5)
 
 	def stop(self):
 		self.terminator["end"] = True
