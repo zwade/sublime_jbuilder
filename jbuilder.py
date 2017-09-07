@@ -127,19 +127,20 @@ class SingleBuilder:
 	def run (self):
 		os.chdir(self.working_directory)
 		procs = []
-		for target in targets:
+		print("hi")
+		for target in self.targets:
 			proc = subprocess.Popen (["jbuilder", "build", target], 
 				stdout=subprocess.PIPE, 
 				stderr=subprocess.PIPE, 
 				cwd=base_directory)
 			procs.append((target, proc))
-		for proc in procs:
+		for (target, proc) in procs:
 			return_code = proc.wait()
 			if return_code != 0:
 				print("jbuilder failed with:")
 				print(proc.stderr.read().decode("utf-8"))
 			else:
-				print("jbuilder succeeded")
+				print("jbuilder succeeded for {}".format(target))
 
 
 class JbuilderCmd(sublime_plugin.WindowCommand):
