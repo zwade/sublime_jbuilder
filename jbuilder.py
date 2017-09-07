@@ -170,7 +170,7 @@ class JbuilderCmd(sublime_plugin.WindowCommand):
 		find_targets = Find_targets(path=folder)
 		targets = [y for (x,y) in find_targets.list()]
 
-		contents = open(, "w+").read()
+		contents = open(targets_file, "w+").read()
 		if not contents:
 			self.window.show_quick_panel(targets, on_done)
 		else:
