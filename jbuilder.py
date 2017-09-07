@@ -159,14 +159,25 @@ class SingleBuilder(threading.Thread):
 			return_code = proc.wait()
 			if return_code != 0:
 				error += "{}: {}\n\n".format(target, proc.stderr.read().decode("utf-8"))
-			else:
-				print(proc.stderr.read())
 
 		success = True
 		if error:
-			print(error)
+			window.run_command("jbuilder_show_compilation_errors", {"args": {"text": error}})
 			success = False
+
 		self.status.stop(success)
+
+class JbuilderShowCompilationErrors(sublime_plugin.TextCommand):
+    def run(self, edit, args):
+        sig_text = args["text"]
+        window = self.view.window()
+
+        output = window.create_output_panel("jbuilder-errors")
+        full_region = sublime.Region(0, output.size())
+        output.replace(edit, full_region, sig_text)
+
+        output.sel().clear()
+        window.run_command("show_panel", {"panel": "output.jbuilder-errors"})
 
 
 class JbuilderCmd(sublime_plugin.WindowCommand):
