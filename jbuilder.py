@@ -120,14 +120,13 @@ class SingleBuilder(threading.Thread):
 		self.on_done = on_done
 
 	def run_in_background(self):
-		status = JbuilderStatus()
+		self.status = JbuilderStatus()
 		result = self.start()
-		status.stop()
-		print(result)
 
 	def run (self):
 		os.chdir(self.working_directory)
 		procs = []
+		error = ""
 		for target in self.targets:
 			if not target:
 				continue
@@ -138,9 +137,8 @@ class SingleBuilder(threading.Thread):
 			return_code = proc.wait()
 			if return_code != 0:
 				print("jbuilder failed with:")
-				print(proc.stderr.read().decode("utf-8"))
-			else:
-				print("jbuilder succeeded for {}".format(target))
+				error += "{}: {}\n\n".format(target, proc.stderr.read().decode("utf-8"))
+		self.status.stop()
 
 
 class JbuilderCmd(sublime_plugin.WindowCommand):
