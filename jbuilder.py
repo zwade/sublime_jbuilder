@@ -116,7 +116,7 @@ class SingleBuilder(threading.Thread):
 	def __init__(self, working_directory, targets, on_done):
 		threading.Thread.__init__(self, name=("JBuilder targets {}".format(targets)))
 		self.working_directory = working_directory
-		self.target = targets
+		self.targets = targets
 		self.on_done = on_done
 
 	def run_in_background(self):
@@ -128,7 +128,6 @@ class SingleBuilder(threading.Thread):
 	def run (self):
 		os.chdir(self.working_directory)
 		procs = []
-		print("hi")
 		for target in self.targets:
 			proc = subprocess.Popen (["jbuilder", "build", target], 
 				stdout=subprocess.PIPE, 
