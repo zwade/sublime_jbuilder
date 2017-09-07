@@ -103,19 +103,33 @@ class JbuilderStatus(threading.Thread):
 		threading.Thread.__init__(self, name="JBuilder Status")
 		self.terminator = {"end" : False}
 		self.view = window.active_view()
+		self.state = 0
 
 	def run(self):
 		while True:
 			if self.terminator["end"]:
-				self.view.erase_status("JBuilder")
 				return
+			states = [
+				"[<==>    ]",
+				"[ <==>   ]",
+				"[  <==>  ]",
+				"[   <==> ]",
+				"[    <==>]",
+				"[>    <==]",
+				"[=>    <=]",
+				"[==>    <]",
+			]
 
 			print("Setting status")
-			self.view.set_status("JBuilder", "Woot")
-			time.sleep(0.5)
+			self.view.set_status("JBuilder", "JBuilder: "+states[self.state])
+			self.state += 1
+			self.state %= len(states)
+			time.sleep(0.05)
 
-	def stop(self):
+	def stop(self, success):
 		self.terminator["end"] = True
+		if (success):
+			self.view.set_status("JBuilder", "JBuilder: Succeeded")
 
 class SingleBuilder(threading.Thread):
 	def __init__(self, window, working_directory, targets, on_done):
