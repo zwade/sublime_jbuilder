@@ -157,9 +157,14 @@ class SingleBuilder(threading.Thread):
 			return_code = proc.wait()
 			if return_code != 0:
 				error += "{}: {}\n\n".format(target, proc.stderr.read().decode("utf-8"))
+			else:
+				print(proc.stdout.read())
+				
+		success = True
 		if error:
 			print(error)
-		self.status.stop()
+			success = False
+		self.status.stop(success)
 
 
 class JbuilderCmd(sublime_plugin.WindowCommand):
