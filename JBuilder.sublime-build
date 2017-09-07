@@ -1,5 +1,5 @@
 {
     "target": "jbuilder_cmd",
-    "cmd": ["echo", "$file"],
+    "cmd": "$file_path",
     "selector": "source.ocaml"
 }

@@ -3,6 +3,7 @@ import subprocess
 import sublime, sublime_plugin
 import threading
 import sys
+import time
 
 base_directory = os.path.dirname(os.path.realpath(__file__))
 find_targets_exe = os.path.join(base_directory, "_build", "default", "find_targets", "find_targets.exe")
@@ -87,20 +88,90 @@ def reload_if_needed(force=False):
 	if target_builder.needs_reload(force):
 		target_builder.start()
 
+def find_dot_sublime_targets (path):
+	if os.path.isfile(os.path.join(path, ".sublime-targets")):
+		return path
+	if path == "/":
+		return None
+	return find_dot_sublime_targets (os.path.dirname(path))
+
+
 reload_if_needed(force=True)
+
+class JbuilderStatus:
+	def __init__(self):
+		self.terminator = {end : False}
+
+	def run(self):
+		while True:
+			if self.terminator.end:
+				return
+			print("hi")
+			time.sleep(2)
+
+	def stop(self):
+		self.terminator.end = True
+
+class SingleBuilder:
+	def __init__(self, working_directory, targets, on_done):
+		self.working_directory = working_directory
+		self.target = targets
+		self.on_done = on_done
+
+	def run_in_background(self):
+		status = JbuilderStatus()
+		result = self.start()
+		status.stop()
+		print(result)
+
+	def run (self):
+		os.chdir(self.working_directory)
+		procs = []
+		for target in targets:
+			proc = subprocess.Popen (["jbuilder", "build", target], 
+				stdout=subprocess.PIPE, 
+				stderr=subprocess.PIPE, 
+				cwd=base_directory)
+			procs.append((target, proc))
+		for proc in procs
+			return_code = proc.wait()
+			if return_code != 0:
+				print("jbuilder failed with:")
+				print(proc.stderr.read().decode("utf-8"))
+			else:
+				print("jbuilder succeeded")
+
 
 class JbuilderCmd(sublime_plugin.WindowCommand):
 	def __init__(self, window):
 		self.window = window
 
 	def run(self, cmd):
-		folder = self.window.folders()[0] if len(self.window.folders()) > 0 else "."
-		print("Current folder is: {}".format(folder))
-		find_targets = Find_targets(path=folder)
-		targets = [y for (x,y) in find_targets.list()]
-		print(cmd)
+		path = cmd
+		if len(self.window.folders()) > 0:
+			working_directory = self.window.folders()[0]
+		else:
+			if path[-1] == "/":
+				path = path[:-1]
+			base_dir = find_dot_sublime_targets (path)
+			if base_dir == None:
+				base_dir = path
+			working_directory = base_dir
+		targets_file = os.path.join(working_directory, ".sublime-targets")
+
 		def on_done (idx):
 			if (idx < 0):
 				return
-			print(targets[idx])
-		self.window.show_quick_panel(targets, on_done)
+			open(targets_file, "a+").write(targets[idx]+"\n")
+			window.open_file(targets_file)
+			builder = SingleBuilder(working_directory, [targets[idx]], 3)
+
+		folder = self.window.folders()[0] if len(self.window.folders()) > 0 else "."
+		find_targets = Find_targets(path=folder)
+		targets = [y for (x,y) in find_targets.list()]
+
+		contents = open(, "w+").read()
+		if not contents:
+			self.window.show_quick_panel(targets, on_done)
+		else:
+			builder = SingleBuilder(working_directory, contents.split("\n"), 3)
