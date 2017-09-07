@@ -162,7 +162,7 @@ class SingleBuilder(threading.Thread):
 
 		success = True
 		if error:
-			window.run_command("jbuilder_show_compilation_errors", {"args": {"text": error}})
+			self.window.run_command("jbuilder_show_compilation_errors", {"args": {"text": error}})
 			success = False
 
 		self.status.stop(success)
