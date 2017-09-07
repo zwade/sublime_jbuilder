@@ -158,8 +158,8 @@ class SingleBuilder(threading.Thread):
 			if return_code != 0:
 				error += "{}: {}\n\n".format(target, proc.stderr.read().decode("utf-8"))
 			else:
-				print(proc.stdout.read())
-				
+				print(proc.stderr.read())
+
 		success = True
 		if error:
 			print(error)
