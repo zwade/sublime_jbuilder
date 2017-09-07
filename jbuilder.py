@@ -180,7 +180,6 @@ class JbuilderShowCompilationErrors(sublime_plugin.TextCommand):
 		output.sel().clear()
 		window.run_command("show_panel", {"panel": "output.jbuilder-errors"})
 
-
 class JbuilderCmd(sublime_plugin.WindowCommand):
 	def __init__(self, window):
 		self.window = window
