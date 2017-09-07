@@ -170,7 +170,7 @@ class SingleBuilder(threading.Thread):
 class JbuilderShowCompilationErrors(sublime_plugin.TextCommand):
     def run(self, edit, args):
     	print("opening")
-        sig_text = args["text"]
+    	sig_text = args["text"]
         window = self.view.window()
 
         output = window.create_output_panel("jbuilder-errors")
