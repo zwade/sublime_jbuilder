@@ -75,7 +75,6 @@ class Find_targets:
 		targets = []
 		for (path, target_names) in mapping:
 			relative_path = self.relativize(path)
-			print("Path: {}, Rel path: {}".format(path, relative_path))
 			for target_name in target_names:
 				rel_path = os.path.join(*(relative_path+[target_name]))
 				abs_path = os.path.join(path, target_name)

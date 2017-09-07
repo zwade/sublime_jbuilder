@@ -25,17 +25,14 @@ module Target = struct
     in
     let base =
       [ id ".cmi"
-      ; id ".cmti"
-      ; id ".cmx"
       ; id ".o"
-      ; id ".a"
       ]
     in
     match name with 
     | Executable _ ->
       (id ".exe")::base
     | Library _ ->
-      (id "")::base
+      base
 end
 
 type t = Target.t list
