@@ -99,7 +99,6 @@ class JbuilderCmd(sublime_plugin.WindowCommand):
 		print("Current folder is: {}".format(folder))
 		find_targets = Find_targets(path=folder)
 		targets = [y for (x,y) in find_targets.list()]
-		print(targets)
 		print(cmd)
 		def on_done (idx):
 			if (idx < 0):
