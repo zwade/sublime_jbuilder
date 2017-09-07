@@ -94,10 +94,11 @@ class JbuilderCmd(sublime_plugin.WindowCommand):
 	def __init__(self, window):
 		self.window = window
 
-	def run(self):
+	def run(self, cmd):
 		folder = self.window.folders()[0] if len(self.window.folders()) > 0 else "."
 		find_targets = Find_targets()
 		targets = find_targets.list()
+		print(cmd)
 		def on_done (idx):
 			print(targets[idx])
 		window.show_quick_panel(targets, on_done)
