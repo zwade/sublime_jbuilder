@@ -60,7 +60,7 @@ let t_of_sexp sexp =
     let targets = 
       match targets with
       | [ targets ] -> targets
-      | []          -> raise_s [%sexp "Could not find targets in", (descriptor : Sexp.t list)]
+      | []          -> []
       | _           -> raise_s [%sexp "Found multiple targets in", (descriptor : Sexp.t list)]
     in
     match definition_type with
