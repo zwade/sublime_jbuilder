@@ -80,7 +80,7 @@ class Find_targets:
 				rel_path = os.path.join(*(relative_path+[target_name]))
 				abs_path = os.path.join(path, target_name)
 				targets.append((abs_path, rel_path))
-		print(targets)
+		return targets
 
 
 def reload_if_needed(force=False):
@@ -97,7 +97,7 @@ class JbuilderCmd(sublime_plugin.WindowCommand):
 	def run(self, cmd):
 		folder = self.window.folders()[0] if len(self.window.folders()) > 0 else "."
 		find_targets = Find_targets()
-		targets = find_targets.list()
+		targets = [y for (x,y) in find_targets.list()]
 		print(cmd)
 		def on_done (idx):
 			print(targets[idx])
