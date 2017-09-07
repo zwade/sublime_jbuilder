@@ -102,7 +102,7 @@ class JbuilderStatus(threading.Thread):
 	def __init__(self, window):
 		threading.Thread.__init__(self, name="JBuilder Status")
 		self.terminator = {"end" : False}
-		self.window
+		self.window = window
 
 	def run(self):
 		while True:
