@@ -106,7 +106,6 @@ class JbuilderStatus(threading.Thread):
 		self.state = 0
 
 	def run(self):
-		print("Starting?")
 		while True:
 			if self.terminator["end"]:
 				return
@@ -142,6 +141,7 @@ class SingleBuilder(threading.Thread):
 
 	def run_in_background(self):
 		self.status = JbuilderStatus(self.window)
+		self.status.start()
 		result = self.start()
 
 	def run (self):
