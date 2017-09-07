@@ -101,5 +101,7 @@ class JbuilderCmd(sublime_plugin.WindowCommand):
 		targets = [y for (x,y) in find_targets.list()]
 		print(cmd)
 		def on_done (idx):
+			if (idx < 0):
+				return
 			print(targets[idx])
 		self.window.show_quick_panel(targets, on_done)
