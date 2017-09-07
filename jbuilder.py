@@ -77,7 +77,6 @@ class Find_targets:
 			relative_path = self.relativize(path)
 			print("Path: {}, Rel path: {}".format(path, relative_path))
 			for target_name in target_names:
-				print(relative_path)
 				rel_path = os.path.join(*(relative_path+[target_name]))
 				abs_path = os.path.join(path, target_name)
 				targets.append((abs_path, rel_path))
@@ -92,6 +91,13 @@ def reload_if_needed(force=False):
 reload_if_needed(force=True)
 
 class JbuilderCmd(sublime_plugin.WindowCommand):
+	def __init__(self, window):
+		self.window = window
+
 	def run(self):
-		targets = Find_targets()
-		targets.list()
+		folder = self.window.folders()[0] if len(self.window.folders()) > 0 else "."
+		find_targets = Find_targets()
+		targets = find_targets.list()
+		def on_done (idx):
+			print(targets[idx])
+		window.show_quick_panel(targets, on_done)
