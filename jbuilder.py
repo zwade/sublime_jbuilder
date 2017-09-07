@@ -117,14 +117,15 @@ class JbuilderStatus(threading.Thread):
 		self.terminator["end"] = True
 
 class SingleBuilder(threading.Thread):
-	def __init__(self, working_directory, targets, on_done):
+	def __init__(self, window, working_directory, targets, on_done):
 		threading.Thread.__init__(self, name=("JBuilder targets {}".format(targets)))
 		self.working_directory = working_directory
 		self.targets = targets
 		self.on_done = on_done
+		self.window = window
 
 	def run_in_background(self):
-		self.status = JbuilderStatus()
+		self.status = JbuilderStatus(self.window)
 		result = self.start()
 
 	def run (self):
@@ -168,7 +169,7 @@ class JbuilderCmd(sublime_plugin.WindowCommand):
 				return
 			open(targets_file, "a+").write(targets[idx]+"\n")
 			self.window.open_file(targets_file)
-			builder = SingleBuilder(working_directory, [targets[idx]], 3)
+			builder = SingleBuilder(self.window, working_directory, [targets[idx]], 3)
 			builder.run_in_background()
 
 		folder = self.window.folders()[0] if len(self.window.folders()) > 0 else "."
@@ -180,5 +181,5 @@ class JbuilderCmd(sublime_plugin.WindowCommand):
 		if not contents:
 			self.window.show_quick_panel(targets, on_done)
 		else:
-			builder = SingleBuilder(working_directory, contents.split("\n"), 3)
+			builder = SingleBuilder(self.window, working_directory, contents.split("\n"), 3)
 			builder.run_in_background()
