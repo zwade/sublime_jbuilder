@@ -120,7 +120,6 @@ class JbuilderStatus(threading.Thread):
 				"[==>    <]",
 			]
 
-			print("Setting status")
 			self.view.set_status("JBuilder", "JBuilder: "+states[self.state])
 			self.state += 1
 			self.state %= len(states)
