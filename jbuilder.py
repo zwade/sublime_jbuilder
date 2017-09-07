@@ -167,6 +167,7 @@ class JbuilderCmd(sublime_plugin.WindowCommand):
 			open(targets_file, "a+").write(targets[idx]+"\n")
 			self.window.open_file(targets_file)
 			builder = SingleBuilder(working_directory, [targets[idx]], 3)
+			builder.run_in_background()
 
 		folder = self.window.folders()[0] if len(self.window.folders()) > 0 else "."
 		find_targets = Find_targets(path=folder)
@@ -177,3 +178,4 @@ class JbuilderCmd(sublime_plugin.WindowCommand):
 			self.window.show_quick_panel(targets, on_done)
 		else:
 			builder = SingleBuilder(working_directory, contents.split("\n"), 3)
+			builder.run_in_background()
