@@ -129,6 +129,8 @@ class JbuilderStatus(threading.Thread):
 		self.terminator["end"] = True
 		if (success):
 			self.view.set_status("JBuilder", "JBuilder: Succeeded")
+		else:
+			self.view.set_status("JBuilder", "JBuilder: Failure")
 
 class SingleBuilder(threading.Thread):
 	def __init__(self, window, working_directory, targets, on_done):
