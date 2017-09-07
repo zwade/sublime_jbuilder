@@ -106,6 +106,7 @@ class JbuilderStatus(threading.Thread):
 		self.state = 0
 
 	def run(self):
+		print("Starting?")
 		while True:
 			if self.terminator["end"]:
 				return
