@@ -98,7 +98,7 @@ def find_dot_sublime_targets (path):
 
 reload_if_needed(force=True)
 
-class JbuilderStatus(threading.thread):
+class JbuilderStatus(threading.Thread):
 	def __init__(self):
 		self.terminator = {"end" : False}
 
@@ -111,7 +111,7 @@ class JbuilderStatus(threading.thread):
 	def stop(self):
 		self.terminator["end"] = True
 
-class SingleBuilder(threading.thread):
+class SingleBuilder(threading.Thread):
 	def __init__(self, working_directory, targets, on_done):
 		self.working_directory = working_directory
 		self.target = targets
