@@ -12,4 +12,4 @@ If there are features that you would like added, feel free to add an issue. Othe
 
 ## Credits
 
-Zach Wade (@zwade)
+Zach Wade (@zwad3)
