@@ -97,7 +97,7 @@ class JbuilderCmd(sublime_plugin.WindowCommand):
 	def run(self, cmd):
 		folder = self.window.folders()[0] if len(self.window.folders()) > 0 else "."
 		print("Current folder is: {}".format(folder))
-		find_targets = Find_targets()
+		find_targets = Find_targets(path=folder)
 		targets = [y for (x,y) in find_targets.list()]
 		print(cmd)
 		def on_done (idx):
