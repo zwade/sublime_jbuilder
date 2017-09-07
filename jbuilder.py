@@ -101,4 +101,4 @@ class JbuilderCmd(sublime_plugin.WindowCommand):
 		print(cmd)
 		def on_done (idx):
 			print(targets[idx])
-		window.show_quick_panel(targets, on_done)
+		self.window.show_quick_panel(targets, on_done)
