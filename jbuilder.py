@@ -200,7 +200,7 @@ def get_build_targets_from_environment(path, window):
 	return (working_directory, targets_file, contents)
 
 def prompt_add_target(targets_file, window, client_on_done):
-	folder = self.window.folders()[0] if len(self.window.folders()) > 0 else "."
+	folder = window.folders()[0] if len(window.folders()) > 0 else "."
 	find_targets = Find_targets(path=folder)
 	targets = [y for (x,y) in find_targets.list()]
 
@@ -208,7 +208,7 @@ def prompt_add_target(targets_file, window, client_on_done):
 		if (idx < 0):
 			return
 		open(targets_file, "a+").write(targets[idx]+"\n")
-		#self.window.open_file(targets_file)
+		#window.open_file(targets_file)
 		client_on_done()
 
 	window.show_quick_panel(targets, on_done)
