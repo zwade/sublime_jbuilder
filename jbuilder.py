@@ -231,6 +231,7 @@ def build_targets(window, working_directory, contents):
 class JbuilderCmd(sublime_plugin.WindowCommand):
 	def __init__(self, window):
 		self.window = window
+		self.view = window.active_view()
 
 	def run(self, cmd=""):
 		path = cmd
@@ -248,6 +249,7 @@ class JbuilderCmd(sublime_plugin.WindowCommand):
 class JbuilderAddTarget(sublime_plugin.WindowCommand):
 	def __init__(self, window):
 		self.window = window
+		self.view = window.active_view()
 
 	def run(self):
 		path = "/".join(self.view.file_name().split("/")[:-1])
@@ -261,6 +263,7 @@ class JbuilderAddTarget(sublime_plugin.WindowCommand):
 class JbuilderRemoveTarget(sublime_plugin.WindowCommand):
 	def __init__(self, window):
 		self.window = window
+		self.view = window.active_view()
 
 	def run(self):
 		path = "/".join(self.view.file_name().split("/")[:-1])
