@@ -186,8 +186,8 @@ def get_build_targets_from_environment(path, window):
 		return 
 	path = "/".join(path.split("/")[:-1])
 
-	if len(self.window.folders()) > 0:
-		working_directory = self.window.folders()[0]
+	if len(window.folders()) > 0:
+		working_directory = window.folders()[0]
 	else:
 		working_directory = find_dot_sublime_targets(path)
 		if working_directory == None:
