@@ -241,7 +241,7 @@ class JbuilderCmd(sublime_plugin.WindowCommand):
 			build_targets(self.window, working_directory, contents)
 
 		if not contents:
-			prompt_add_target(targets_file, window, on_done)
+			prompt_add_target(targets_file, self.window, on_done)
 		else:
 			build_targets(self.window, working_directory, contents)
 
@@ -258,7 +258,7 @@ class JbuilderAddTarget(sublime_plugin.WindowCommand):
 		def on_done():
 			pass
 
-		prompt_add_target(targets_file, window, on_done)
+		prompt_add_target(targets_file, self.window, on_done)
 
 class JbuilderRemoveTarget(sublime_plugin.WindowCommand):
 	def __init__(self, window):
@@ -272,7 +272,7 @@ class JbuilderRemoveTarget(sublime_plugin.WindowCommand):
 		def on_done():
 			pass
 
-		prompt_remove_target(targets_file, contents, window, on_done)
+		prompt_remove_target(targets_file, contents, self.window, on_done)
 
 
 
