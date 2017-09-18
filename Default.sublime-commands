@@ -2,5 +2,13 @@
 	{
 		"caption": "Build target using JBuilder",
 		"command": "jbuilder_cmd"
+	},
+	{
+		"caption": "Add a target to JBuilder",
+		"command": "jbuilder_add_target"
+	},
+	{
+		"caption": "Remove a target from JBuilder",
+		"command": "jbuilder_remove_target"
 	}
 ]

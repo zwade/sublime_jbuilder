@@ -180,42 +180,96 @@ class JbuilderShowCompilationErrors(sublime_plugin.TextCommand):
 		output.sel().clear()
 		window.run_command("show_panel", {"panel": "output.jbuilder-errors"})
 
+def get_build_targets_from_environment(path, window):
+	if path == None:
+		sublime.error_message("Please save file before building")
+		return 
+	path = "/".join(path.split("/")[:-1])
+
+	if len(self.window.folders()) > 0:
+		working_directory = self.window.folders()[0]
+	else:
+		working_directory = find_dot_sublime_targets(path)
+		if working_directory == None:
+			working_directory = path
+	targets_file = os.path.join(working_directory, ".sublime-targets")
+	try:
+		contents = open(targets_file, "r+").read()
+	except FileNotFoundError:
+		contents = None
+	return (working_directory, targets_file, contents)
+
+def prompt_add_target(targets_file, window, client_on_done):
+	folder = self.window.folders()[0] if len(self.window.folders()) > 0 else "."
+	find_targets = Find_targets(path=folder)
+	targets = [y for (x,y) in find_targets.list()]
+
+	def on_done (idx):
+		if (idx < 0):
+			return
+		open(targets_file, "a+").write(targets[idx]+"\n")
+		#self.window.open_file(targets_file)
+		client_on_done()
+
+	window.show_quick_panel(targets, on_done)
+
+def prompt_remove_target(targets_file, contents, window, client_on_done):
+	targets = contents.split("\n")
+
+	def on_done (idx):
+		if (idx < 0):
+			return
+		open(targets_file, "w+").write("\n".join(targets[:idx]+targets[idx+1:]))
+		client_on_done()
+
+	window.show_quick_panel(targets, on_done)
+
+def build_targets(window, working_directory, contents):
+		builder = SingleBuilder(window, working_directory, contents.split("\n"), 3)
+		builder.run_in_background()
+
 class JbuilderCmd(sublime_plugin.WindowCommand):
 	def __init__(self, window):
 		self.window = window
 
-	def run(self, cmd):
+	def run(self, cmd=""):
 		path = cmd
-		if len(self.window.folders()) > 0:
-			working_directory = self.window.folders()[0]
-		else:
-			if path[-1] == "/":
-				path = path[:-1]
-			base_dir = find_dot_sublime_targets(path)
-			if base_dir == None:
-				base_dir = path
-			working_directory = base_dir
-		targets_file = os.path.join(working_directory, ".sublime-targets")
+		(working_directory, targets_file, contents) = get_build_targets_from_environment(path, self.window)
+		
+		def on_done():
+			build_targets(self.window, working_directory, contents)
 
-		def on_done (idx):
-			if (idx < 0):
-				return
-			open(targets_file, "a+").write(targets[idx]+"\n")
-			self.window.open_file(targets_file)
-			builder = SingleBuilder(self.window, working_directory, [targets[idx]], 3)
-			builder.run_in_background()
-
-		folder = self.window.folders()[0] if len(self.window.folders()) > 0 else "."
-		find_targets = Find_targets(path=folder)
-		targets = [y for (x,y) in find_targets.list()]
-
-		try:
-			contents = open(targets_file, "r+").read()
-		except FileNotFoundError:
-			contents = None
-			
 		if not contents:
-			self.window.show_quick_panel(targets, on_done)
+			prompt_add_target(targets_file, window, on_done)
 		else:
-			builder = SingleBuilder(self.window, working_directory, contents.split("\n"), 3)
-			builder.run_in_background()
+			build_targets(self.window, working_directory, contents)
+
+
+class JbuilderAddTarget(sublime_plugin.WindowCommand):
+	def __init__(self, window):
+		self.window = window
+
+	def run(self):
+		path = "/".join(self.view.file_name().split("/")[:-1])
+		(working_directory, targets_file, contents) = get_build_targets_from_environment(path, self.window)
+
+		def on_done():
+			pass
+
+		prompt_add_target(targets_file, window, on_done)
+
+class JbuilderRemoveTarget(sublime_plugin.WindowCommand):
+	def __init__(self, window):
+		self.window = window
+
+	def run(self):
+		path = "/".join(self.view.file_name().split("/")[:-1])
+		(working_directory, targets_file, contents) = get_build_targets_from_environment(path, self.window)
+
+		def on_done():
+			pass
+
+		prompt_remove_target(targets_file, contents, window, on_done)
+
+
+
