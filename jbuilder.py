@@ -221,6 +221,8 @@ def prompt_add_target(targets_file, window, client_on_done):
 	window.show_quick_panel(targets, on_done)
 
 def prompt_remove_target(targets_file, contents, window, client_on_done):
+	if contents == None:
+		return
 	targets = contents.strip().split("\n")
 
 	def on_done (idx):
