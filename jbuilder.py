@@ -222,7 +222,7 @@ def prompt_add_target(targets_file, window, client_on_done):
 
 def prompt_remove_target(targets_file, contents, window, client_on_done):
 	if contents == None:
-		return
+		sublime.error_message("No targets defined")
 	targets = contents.strip().split("\n")
 
 	def on_done (idx):
@@ -235,8 +235,10 @@ def prompt_remove_target(targets_file, contents, window, client_on_done):
 	window.show_quick_panel(targets, on_done)
 
 def build_targets(window, working_directory, contents):
-		builder = SingleBuilder(window, working_directory, contents.split("\n"), 3)
-		builder.run_in_background()
+	if contents == None:
+		sublime.error_message("Fatal: Cannot find .sublime-targets in directory {}".format(working_directory))
+	builder = SingleBuilder(window, working_directory, contents.split("\n"), 3)
+	builder.run_in_background()
 
 class JbuilderCmd(sublime_plugin.WindowCommand):
 	def __init__(self, window):
