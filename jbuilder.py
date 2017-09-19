@@ -216,7 +216,7 @@ def prompt_add_target(targets_file, window, client_on_done):
 			return
 		with open(targets_file, "a+") as targets_fd:
 			targets_fd.write(targets[idx]+"\n")
-		client_on_done()
+			client_on_done()
 
 	window.show_quick_panel(targets, on_done)
 
@@ -230,7 +230,7 @@ def prompt_remove_target(targets_file, contents, window, client_on_done):
 			return
 		with open(targets_file, "w+") as targets_fd:
 			targets_fd.write("\n".join(targets[:idx]+targets[idx+1:]))
-		client_on_done()
+			client_on_done()
 
 	window.show_quick_panel(targets, on_done)
 
