@@ -4,25 +4,16 @@ import sublime, sublime_plugin
 import threading
 import sys
 import time
+import shutil
 
-base_directory = os.path.dirname(os.path.realpath(__file__))
+base_directory = sublime.cache_path()
+local_src = os.path.join(os.path.dirname(__file__), "find_targets")
+local_dst = os.path.join(base_directory, "find_targets")
+shutil.copy(local_src, local_dst)
+
 find_targets_exe = os.path.join(base_directory, "_build", "default", "find_targets", "find_targets.exe")
 
-# Weird hacks to avoid sublime caching an old version
-if sys.version_info.minor < 3:
-	from sexp import parse_sexp
-else:
-	if sys.version_info.minor < 4:
-	    from imp import reload
-	else:
-	    from importlib import reload
-	if base_directory not in sys.path:
-	    sys.path.append(base_directory)
-
-	import sexp
-	reload(sexp)
-
-	from sexp import parse_sexp
+from .sexp import parse_sexp
 
 class Find_targets_builder(threading.Thread):
 	build_lock = threading.Lock()
