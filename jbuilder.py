@@ -214,10 +214,9 @@ def prompt_add_target(targets_file, window, client_on_done):
 	def on_done (idx):
 		if (idx < 0):
 			return
-		with open(targets_file, "a+") as targets_fd:
-			targets_fd.write(targets[idx]+"\n")
-			print("Done adding")
-		print("Calling handler")
+		targets_fd = open(targets_file, "a+")
+		targets_fd.write(targets[idx]+"\n")
+		targets_fd.close()
 		client_on_done()
 
 	window.show_quick_panel(targets, on_done)
