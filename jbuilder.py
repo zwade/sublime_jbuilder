@@ -18,15 +18,17 @@ except FileNotFoundError:
 	# That's ok, if the tree doesn't exist we don't need to remove it
 	pass
 
+self_directory = os.path.dirname(__file__)
+
 # Are we running as a compiled package
-if os.path.dirname(__file__).split(".")[-1] == "sublime-package":
-	self_package = ZipFile(__file__)
+if self_directory.split(".")[-1] == "sublime-package":
+	self_package = ZipFile(self_directory)
 	for file in self_package.namelist():
 		if file.startswith("find_targets"):
 			archive.extract(file, local_dst)
 # Or are we loaded in as a directory
 else:
-	local_src = os.path.join(os.path.dirname(__file__), "find_targets")
+	local_src = os.path.join(self_directory, "find_targets")
 	shutil.copytree(local_src, local_dst)
 
 find_targets_exe = os.path.join(base_directory, "_build", "default", "find_targets", "find_targets.exe")
