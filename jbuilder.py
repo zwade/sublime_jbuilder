@@ -6,10 +6,11 @@ import sys
 import time
 import shutil
 
+# Build a local version of find_targets -- This will allow us to interface with the existing OCaml
 base_directory = sublime.cache_path()
 local_src = os.path.join(os.path.dirname(__file__), "find_targets")
 local_dst = os.path.join(base_directory, "find_targets")
-shutil.copy(local_src, local_dst)
+shutil.copytree(local_src, local_dst)
 
 find_targets_exe = os.path.join(base_directory, "_build", "default", "find_targets", "find_targets.exe")
 
