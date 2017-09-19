@@ -201,7 +201,7 @@ def get_build_targets_from_environment(path, window):
 	contents = None
 	try:
 		with open(targets_file, "r+") as targets_fd:
-			content = targets_fd.read()
+			contents = targets_fd.read()
 	except FileNotFoundError:
 		pass
 	return (working_directory, targets_file, contents)
