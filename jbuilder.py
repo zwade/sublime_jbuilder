@@ -20,7 +20,6 @@ except FileNotFoundError:
 
 self_directory = os.path.dirname(__file__)
 
-print(sublime.load_binary_resource("find_targets"))
 # Are we running as a compiled package
 if self_directory.split(".")[-1] == "sublime-package":
 	self_package = ZipFile(self_directory)
@@ -54,14 +53,11 @@ class Find_targets_builder(threading.Thread):
 		if return_code != 0:
 			print("jbuilder failed with:")
 			print(proc.stderr.read().decode("utf-8"))
-		else:
-			print("jbuilder succeeded")
 		Find_targets_builder.build_lock.release()
 
 class Find_targets:
 	def __init__(self, path=os.path.join(base_directory,".")):
 		self.path=os.path.abspath(path)
-		print(self.path)
 
 	def relativize(self, new_path):
 		my_path  = self.path.split("/")
@@ -179,7 +175,6 @@ class SingleBuilder(threading.Thread):
 
 class JbuilderShowCompilationErrors(sublime_plugin.TextCommand):
 	def run(self, edit, args):
-		print("opening")
 		sig_text = args["text"]
 		window = self.view.window()
 
@@ -204,7 +199,8 @@ def get_build_targets_from_environment(path, window):
 			working_directory = path
 	targets_file = os.path.join(working_directory, ".sublime-targets")
 	try:
-		contents = open(targets_file, "r+").read()
+		with open(targets_file, "r+") as targets:
+			content = targets.read()
 	except FileNotFoundError:
 		contents = None
 	return (working_directory, targets_file, contents)
@@ -217,19 +213,20 @@ def prompt_add_target(targets_file, window, client_on_done):
 	def on_done (idx):
 		if (idx < 0):
 			return
-		open(targets_file, "a+").write(targets[idx]+"\n")
-		#window.open_file(targets_file)
+		with open(targets_file, "a+") as targets:
+			targets.write(targets[idx]+"\n")
 		client_on_done()
 
 	window.show_quick_panel(targets, on_done)
 
 def prompt_remove_target(targets_file, contents, window, client_on_done):
-	targets = contents.split("\n")
+	targets = contents.strip().split("\n")
 
 	def on_done (idx):
 		if (idx < 0):
 			return
-		open(targets_file, "w+").write("\n".join(targets[:idx]+targets[idx+1:]))
+		with open(targets_file, "w+") as targets:
+			targets.write("\n".join(targets[:idx]+targets[idx+1:]))
 		client_on_done()
 
 	window.show_quick_panel(targets, on_done)
