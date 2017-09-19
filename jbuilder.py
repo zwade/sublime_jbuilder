@@ -198,11 +198,12 @@ def get_build_targets_from_environment(path, window):
 		if working_directory == None:
 			working_directory = path
 	targets_file = os.path.join(working_directory, ".sublime-targets")
+	contents = None
 	try:
 		with open(targets_file, "r+") as targets:
 			content = targets.read()
 	except FileNotFoundError:
-		contents = None
+		pass
 	return (working_directory, targets_file, contents)
 
 def prompt_add_target(targets_file, window, client_on_done):
