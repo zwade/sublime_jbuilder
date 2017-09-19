@@ -25,7 +25,7 @@ if self_directory.split(".")[-1] == "sublime-package":
 	self_package = ZipFile(self_directory)
 	for file in self_package.namelist():
 		if file.startswith("find_targets"):
-			archive.extract(file, local_dst)
+			self_package.extract(file, local_dst)
 # Or are we loaded in as a directory
 else:
 	local_src = os.path.join(self_directory, "find_targets")
