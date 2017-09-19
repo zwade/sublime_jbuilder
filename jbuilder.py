@@ -12,7 +12,12 @@ from .sexp import parse_sexp
 # Build a local version of find_targets -- This will allow us to interface with the existing OCaml
 base_directory = sublime.cache_path()
 local_dst = os.path.join(base_directory, "find_targets")
-
+try:
+	shutil.rmtree(local_dst)
+except FileNotFoundError:
+	# That's ok, if the tree doesn't exist we don't need to remove it
+	pass
+	
 # Are we running as a compiled package
 if __file__.split(".")[-1] == "sublime-package":
 	self_package = ZipFile(__file__)
@@ -22,11 +27,6 @@ if __file__.split(".")[-1] == "sublime-package":
 # Or are we loaded in as a directory
 else:
 	local_src = os.path.join(os.path.dirname(__file__), "find_targets")
-	try:
-		shutil.rmtree(local_dst)
-	except FileNotFoundError:
-		# That's ok, if the tree doesn't exist we don't need to remove it
-		pass
 	shutil.copytree(local_src, local_dst)
 
 find_targets_exe = os.path.join(base_directory, "_build", "default", "find_targets", "find_targets.exe")
