@@ -200,8 +200,8 @@ def get_build_targets_from_environment(path, window):
 	targets_file = os.path.join(working_directory, ".sublime-targets")
 	contents = None
 	try:
-		with open(targets_file, "r+") as targets:
-			content = targets.read()
+		with open(targets_file, "r+") as targets_fd:
+			content = targets_fd.read()
 	except FileNotFoundError:
 		pass
 	return (working_directory, targets_file, contents)
@@ -214,8 +214,8 @@ def prompt_add_target(targets_file, window, client_on_done):
 	def on_done (idx):
 		if (idx < 0):
 			return
-		with open(targets_file, "a+") as targets:
-			targets.write(targets[idx]+"\n")
+		with open(targets_file, "a+") as targets_fd:
+			targets_fd.write(targets[idx]+"\n")
 		client_on_done()
 
 	window.show_quick_panel(targets, on_done)
@@ -228,8 +228,8 @@ def prompt_remove_target(targets_file, contents, window, client_on_done):
 	def on_done (idx):
 		if (idx < 0):
 			return
-		with open(targets_file, "w+") as targets:
-			targets.write("\n".join(targets[:idx]+targets[idx+1:]))
+		with open(targets_file, "w+") as targets_fd:
+			targets_fd.write("\n".join(targets[:idx]+targets[idx+1:]))
 		client_on_done()
 
 	window.show_quick_panel(targets, on_done)
