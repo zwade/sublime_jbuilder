@@ -251,7 +251,7 @@ class JbuilderCmd(sublime_plugin.WindowCommand):
 		path = cmd
 		(working_directory, targets_file, contents) = get_build_targets_from_environment(path, self.window)
 		
-		def on_done():
+		def on_done(contents):
 			build_targets(self.window, working_directory, contents)
 
 		if not contents:
@@ -269,7 +269,7 @@ class JbuilderAddTarget(sublime_plugin.WindowCommand):
 		path = "/".join(self.view.file_name().split("/")[:-1])
 		(working_directory, targets_file, contents) = get_build_targets_from_environment(path, self.window)
 
-		def on_done():
+		def on_done(contents):
 			pass
 
 		prompt_add_target(targets_file, self.window, on_done)
@@ -283,7 +283,7 @@ class JbuilderRemoveTarget(sublime_plugin.WindowCommand):
 		path = "/".join(self.view.file_name().split("/")[:-1])
 		(working_directory, targets_file, contents) = get_build_targets_from_environment(path, self.window)
 
-		def on_done():
+		def on_done(contents):
 			pass
 
 		prompt_remove_target(targets_file, contents, self.window, on_done)
