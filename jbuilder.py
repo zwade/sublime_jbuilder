@@ -17,9 +17,9 @@ try:
 except FileNotFoundError:
 	# That's ok, if the tree doesn't exist we don't need to remove it
 	pass
-	
+
 # Are we running as a compiled package
-if __file__.split(".")[-1] == "sublime-package":
+if os.path.dirname(__file__).split(".")[-1] == "sublime-package":
 	self_package = ZipFile(__file__)
 	for file in self_package.namelist():
 		if file.startswith("find_targets"):
