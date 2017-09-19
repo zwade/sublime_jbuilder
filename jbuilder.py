@@ -20,6 +20,7 @@ except FileNotFoundError:
 
 self_directory = os.path.dirname(__file__)
 
+print(sublime.load_binary_resource("find_targets"))
 # Are we running as a compiled package
 if self_directory.split(".")[-1] == "sublime-package":
 	self_package = ZipFile(self_directory)
